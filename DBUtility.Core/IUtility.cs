@@ -9,5 +9,6 @@ namespace DBUtility.Core
     public interface IUtility
     {
         Response Task();
+        event Action<int> ProgressChanged;
     }
 }

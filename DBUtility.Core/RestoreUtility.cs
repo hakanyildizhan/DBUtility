@@ -17,10 +17,16 @@ namespace DBUtility.Core
     {
         private static Logger log = LogManager.GetCurrentClassLogger();
         private DBArtifact _db;
+        public event Action<int> ProgressChanged;
 
         public RestoreUtility(DBArtifact db)
         {
             _db = db;
+        }
+
+        private void OnProgressChanged(int progress)
+        {
+            ProgressChanged?.Invoke(progress);
         }
 
         public Response Task()
@@ -29,10 +35,10 @@ namespace DBUtility.Core
             string dbBakFile = _db.File.FullName;
             string dbtoRestore = _db.DatabaseName;
 
-            if (string.IsNullOrEmpty(dbBakFile))
+            if (string.IsNullOrEmpty(dbBakFile) || !File.Exists(dbBakFile))
             {
                 response.Status = Response.ResponseMessage.Failed;
-                response.Message = "No .bak file found in " + dbtoRestore;
+                response.Message = "No such .bak file found.";
                 return response;
             }
 
@@ -53,9 +59,6 @@ namespace DBUtility.Core
 
             var restore = new Restore();
             var deviceItem = new BackupDeviceItem(dbBakFile, DeviceType.File);
-
-            //restore.DatabaseFiles.Add(dbPath);
-            //restore.DatabaseFiles.Add(logPath);
             
             restore.ReplaceDatabase = true;
             restore.PercentCompleteNotification = 10;
@@ -65,11 +68,38 @@ namespace DBUtility.Core
             try
             {
                 restore.Devices.Add(deviceItem);
-                DataTable dtFileList = restore.ReadFileList(smoServer);
-                string dbLogicalName = dtFileList.Rows[0][0].ToString();
-                string logLogicalName = dtFileList.Rows[1][0].ToString();
-                restore.RelocateFiles.Add(new RelocateFile(dbLogicalName, dbPath));
-                restore.RelocateFiles.Add(new RelocateFile(logLogicalName, logPath));
+                if (db != null)
+                {
+                    DataTable dtFileList = restore.ReadFileList(smoServer);
+                    string dbLogicalName = dtFileList.Rows[0][0].ToString();
+                    string logLogicalName = dtFileList.Rows[1][0].ToString();
+                    restore.RelocateFiles.Add(new RelocateFile(dbLogicalName, dbPath));
+                    restore.RelocateFiles.Add(new RelocateFile(logLogicalName, logPath));
+                }
+                else
+                {
+                    Database smoDatabase = new Database(smoServer, dbtoRestore);
+                    FileGroup fg = new FileGroup(smoDatabase, "PRIMARY");
+                    smoDatabase.FileGroups.Add(fg);
+                    DataFile df = new DataFile(fg, dbtoRestore, dbPath);
+                    df.IsPrimaryFile = true;
+                    fg.Files.Add(df);
+                    
+                    LogFile lf = new LogFile(smoDatabase, dbtoRestore + "_log", logPath);
+                    smoDatabase.LogFiles.Add(lf);
+                    smoDatabase.Create();
+                    smoServer.Refresh();
+                    smoServer.KillAllProcesses(dbtoRestore);
+                    log.Debug("All processes on db killed");
+                    smoServer.Databases[dbtoRestore].SetOffline();
+                    //restore.DatabaseFiles.Add(dbPath);
+                    //restore.DatabaseFiles.Add(logPath);
+                    DataTable dtFileList = restore.ReadFileList(smoServer);
+                    string dbLogicalName = dtFileList.Rows[0][0].ToString();
+                    string logLogicalName = dtFileList.Rows[1][0].ToString();
+                    restore.RelocateFiles.Add(new RelocateFile(dbLogicalName, dbPath));
+                    restore.RelocateFiles.Add(new RelocateFile(logLogicalName, logPath));
+                }
                 restore.Database = dbtoRestore;
                 restore.FileNumber = 1;
                 restore.Action = RestoreActionType.Files;
@@ -87,6 +117,7 @@ namespace DBUtility.Core
             }
             
             response.Status = Response.ResponseMessage.Succeeded;
+            response.Message = string.Format("{0} file restored to database {1}.", _db.File.Name, dbtoRestore);
             return response;
         }
 
@@ -97,6 +128,7 @@ namespace DBUtility.Core
 
         private void restore_PercentComplete(object sender, PercentCompleteEventArgs e)
         {
+            OnProgressChanged(e.Percent);
             log.Info("{0}% complete", e.Percent);
         }
     }

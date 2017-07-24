@@ -54,6 +54,7 @@
     <Compile Include="Response.cs" />
     <Compile Include="RestoreUtility.cs" />
     <Compile Include="IUtility.cs" />
+    <Compile Include="ServerManager.cs" />
     <Compile Include="UtilityFactory.cs" />
   </ItemGroup>
   <ItemGroup>

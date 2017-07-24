@@ -17,10 +17,16 @@ namespace DBUtility.Core
     {
         private static Logger log = LogManager.GetCurrentClassLogger();
         private DBArtifact _db;
+        public event Action<int> ProgressChanged;
 
         public BackupUtility(DBArtifact db)
         {
             _db = db;
+        }
+
+        private void OnProgressChanged(int progress)
+        {
+            ProgressChanged?.Invoke(progress);
         }
 
         public Response Task()
@@ -65,6 +71,7 @@ namespace DBUtility.Core
             }
             
             response.Status = Response.ResponseMessage.Succeeded;
+            response.Message = string.Format("{0} database backed up to {1}.", dbtoBackup, dbBakFile);
             return response;
         }
 
@@ -75,7 +82,9 @@ namespace DBUtility.Core
 
         private void backup_PercentComplete(object sender, PercentCompleteEventArgs e)
         {
+            OnProgressChanged(e.Percent);
             log.Info("{0}% complete", e.Percent);
         }
+        
     }
 }
