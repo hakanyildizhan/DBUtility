@@ -4,16 +4,10 @@
 
 @model DBUtility.WebUI.ViewModels.FadingBodyView
 
-<div class="row main-content">
-    <div class="col-md-1 col-sm-1 col-xs-1 col-lg-2">
-        <button id="back">BACK</button>
+<form>
+    <div class="row main-content" id="partial">
+
+        @Html.Partial(Model.Title, Model);
+
     </div>
-    <div class="col-md-8 col-lg-8 col-xs-8 col-sm-8 container body-content">
-        @if (string.IsNullOrEmpty(Model.Title)) { Html.Partial("_SelectFile"); }
-        else { Html.Partial(Model.Title); }
-        <hr />
-    </div>
-    <div class="col-md-1 col-sm-1 col-xs-1 col-lg-2">
-        <button id="next">NEXT</button>
-    </div>
-</div>
+</form>

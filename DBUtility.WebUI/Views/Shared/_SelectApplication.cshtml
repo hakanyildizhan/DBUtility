@@ -1,5 +1,5 @@
 ﻿@{
-    string title = "_SelectFile";
+    string title = "_SelectApplication";
 }
 
 @model DBUtility.WebUI.ViewModels.FadingBodyView
@@ -10,29 +10,17 @@
     </button>
 </div>
 <div class="col-md-8 col-lg-8 col-xs-8 col-sm-8 container body-content">
-    @*@{
-        if (string.IsNullOrEmpty(Model.Title))
-        { @Html.Partial("_SelectFile");
-        }
-        else
-        { @Html.Partial(Model.Title);
-        }
-    }*@
 
     <div class="row fading-body">
         <div class="container-fluid">
             <div class="panel panel-primary panel-transparent">
                 <div class="panel-heading">
-                    <h3 class="panel-title">Select File</h3>
+                    <h3 class="panel-title">Select Application</h3>
                 </div>
-                <div class="panel-body">
-                    <input id="currentView" name="currentView" hidden="hidden" value="@title" />
-                    <input id="file" name="file" type="text" />
-                </div>
+                <div class="panel-body">Panel content</div>
             </div>
         </div>
     </div>
-
     <hr />
 </div>
 <div class="col-md-2 col-sm-2 col-xs-2 col-lg-2">
@@ -40,4 +28,3 @@
         <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
     </button>
 </div>
-
