@@ -7,7 +7,6 @@
 *.userosscache
 *.sln.docstates
 app.config
-web.config
 *.log
 
 # User-specific files (MonoDevelop/Xamarin Studio)

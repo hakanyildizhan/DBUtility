@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DBUtility.UI", "DBUtility.U
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DBUtility.Core", "DBUtility.Core\DBUtility.Core.csproj", "{48FB087E-7818-46E4-BF1E-1FBDAD8A4D7E}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DBUtility.WebUI", "DBUtility.WebUI\DBUtility.WebUI.csproj", "{83DD1113-0AB5-48FA-AC3F-48CCFAFC7C83}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{48FB087E-7818-46E4-BF1E-1FBDAD8A4D7E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{48FB087E-7818-46E4-BF1E-1FBDAD8A4D7E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{48FB087E-7818-46E4-BF1E-1FBDAD8A4D7E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{83DD1113-0AB5-48FA-AC3F-48CCFAFC7C83}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{83DD1113-0AB5-48FA-AC3F-48CCFAFC7C83}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{83DD1113-0AB5-48FA-AC3F-48CCFAFC7C83}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{83DD1113-0AB5-48FA-AC3F-48CCFAFC7C83}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
