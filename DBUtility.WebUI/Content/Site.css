@@ -22,3 +22,35 @@ select,
 textarea {
     max-width: 280px;
 }
+
+.navbar-inverse {
+    background-color: #428bca !important;
+}
+
+.navbar-inverse a,p {
+    color: white !important;
+}
+
+.container-fluid {
+    margin-top: 100px;
+}
+
+.panel-transparent {
+    background: none;
+    min-height: 300px;
+    width: 60%;
+    margin: 0 auto;
+}
+
+    .panel-transparent .panel-heading {
+        background: rgba(122, 130, 136, 0.2) !important;
+    }
+
+    .panel-transparent .panel-body {
+        background: white !important;
+    }
+
+.main-content {
+    width: 80%;
+    margin: 0 auto;
+}
