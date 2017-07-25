@@ -8,6 +8,7 @@
 *.sln.docstates
 app.config
 *.log
+web.config
 
 # User-specific files (MonoDevelop/Xamarin Studio)
 *.userprefs
