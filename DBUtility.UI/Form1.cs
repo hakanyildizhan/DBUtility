@@ -27,10 +27,14 @@ namespace DBUtility.UI
                 FileName = txtFilename.Text
             };
 
-            IUtility utility = UtilityFactory.Instance(UtilityType.Restore, db);
-            BackgroundWorker worker = new BackgroundWorker();
-            worker.DoWork += (obj, ea) => Restore(utility);
-            worker.RunWorkerAsync();
+            if (MessageBox.Show(string.Format("{0} file will be restored with the name {1} on server {2}. Do you want to continue?", db.FileName, db.DatabaseName, db.ServerName), "Info", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+            {
+                IUtility utility = UtilityFactory.Instance(UtilityType.Restore, db);
+                BackgroundWorker worker = new BackgroundWorker();
+                worker.DoWork += (obj, ea) => Restore(utility);
+                worker.RunWorkerAsync();
+            }
+            
         }
 
         private void Restore(IUtility utility)
@@ -152,7 +156,7 @@ namespace DBUtility.UI
 
         private void ToggleForm(bool enable)
         {
-            List<Control> controls = this.Controls.Cast<Control>().Where(c => !(c is ProgressBar)).ToList();
+            List<Control> controls = this.Controls.Cast<Control>().Where(c => !(c is ProgressBar) && c.Visible).ToList();
             foreach (Control control in controls)
             {
                 Action action = () => control.Enabled = enable;
