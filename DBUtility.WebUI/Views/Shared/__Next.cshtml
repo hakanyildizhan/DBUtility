@@ -1,0 +1,9 @@
+﻿@{
+    bool navigationDisabled = !Convert.ToBoolean(ViewData["canGoNext"]);
+}
+
+<div class="col-md-2 col-sm-2 col-xs-2 col-lg-2">
+    <button type="button" class="btn btn-default" aria-label="Left Align" id="next" onclick="navigateForm(this);" disabled=@navigationDisabled>
+        <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+    </button>
+</div>

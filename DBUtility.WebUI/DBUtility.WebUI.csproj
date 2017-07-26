@@ -182,6 +182,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
     <Compile Include="ViewModels\FadingBodyView.cs" />
+    <Compile Include="ViewModels\_PartialVM.cs" />
+    <Compile Include="ViewModels\_SelectApplication.cs" />
+    <Compile Include="ViewModels\_SelectFile.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap.css" />
@@ -223,6 +226,8 @@
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Shared\_SelectFile.cshtml" />
     <Content Include="Views\Shared\_SelectApplication.cshtml" />
+    <Content Include="Views\Shared\__Back.cshtml" />
+    <Content Include="Views\Shared\__Next.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

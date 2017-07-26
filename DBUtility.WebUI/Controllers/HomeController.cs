@@ -14,7 +14,7 @@ namespace DBUtility.WebUI.Controllers
         [HttpGet]
         public ActionResult Index()
         {
-            FadingBodyView model = new FadingBodyView()
+            _PartialVM model = new _SelectFile()
             {
                 Title = "_SelectFile",
                 CanGoBack = false,
@@ -25,29 +25,57 @@ namespace DBUtility.WebUI.Controllers
         }
 
         [HttpPost]
-        public PartialViewResult Next(string currentView, string file)
+        public PartialViewResult Navigate(_PartialVM model)
         {
+            string currentView = model.Title;
+            string direction = model.Direction;
+
+            if (model is _SelectFile)
+            {
+                string file = (model as _SelectFile).File;
+            }
+            
+
             string partialViewToRender = string.Empty;
             bool canGoBack = true;
             bool canGoNext = true;
 
-            switch (currentView)
+            if (direction.Equals("Next", StringComparison.InvariantCultureIgnoreCase))
             {
-                case "_SelectFile":
-                    partialViewToRender = "_SelectApplication";
-                    break;
-                default:
-                    break;
+                switch (currentView)
+                {
+                    case "_SelectFile":
+                        partialViewToRender = "_SelectApplication";
+                        break;
+                    default:
+                        break;
+                }
             }
 
-            FadingBodyView model = new FadingBodyView()
+            else
+            {
+                switch (currentView)
+                {
+                    case "_SelectFile":
+                        partialViewToRender = "_SelectFile";
+                        break;
+                    case "_SelectApplication":
+                        partialViewToRender = "_SelectFile";
+                        break;
+                    default:
+                        break;
+                }
+            }
+            
+
+            FadingBodyView newModel = new FadingBodyView()
             {
                 Title = partialViewToRender,
                 CanGoBack = canGoBack,
                 CanGoNext = canGoNext
             };
 
-            return PartialView(partialViewToRender, model);
+            return PartialView(partialViewToRender, newModel);
         }
     }
 }

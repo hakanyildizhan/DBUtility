@@ -2,24 +2,26 @@
     alert($("#back").attr("disabled"));
 }
 
-function nextForm() {
+function navigateForm(element) {
+    var data = $("form").serializeArray();
+    data.push({ name: "direction", value: element.id });
     $.ajax({
-        url: "/Home/Next",
+        url: "/Home/Navigate",
         type: "post",
-        data: $("form").serialize(), //if you need to post Model data, use this
+        data: data,
         success: function (result) {
             $("#partial").html(result);
         }
     });
 }
 
-function previousForm() {
-    $.ajax({
-        url: "/Home/Back",
-        type: "post",
-        data: $("form").serialize(), //if you need to post Model data, use this
-        success: function (result) {
-            $("#partial").html(result);
-        }
-    });
-}
+//function previousForm() {
+//    $.ajax({
+//        url: "/Home/Back",
+//        type: "post",
+//        data: $("form").serialize(), //if you need to post Model data, use this
+//        success: function (result) {
+//            $("#partial").html(result);
+//        }
+//    });
+//}

@@ -2,13 +2,10 @@
     string title = "_SelectApplication";
 }
 
-@model DBUtility.WebUI.ViewModels.FadingBodyView
+@model DBUtility.WebUI.ViewModels._SelectApplication
 
-<div class="col-md-2 col-sm-2 col-xs-2 col-lg-2">
-    <button type="button" class="btn btn-default" aria-label="Left Align" id="back" disabled=@(Model.CanGoBack ? false : true)>
-        <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
-    </button>
-</div>
+@Html.Partial("__Back", new ViewDataDictionary { { "canGoBack", @Model.CanGoBack } });
+
 <div class="col-md-8 col-lg-8 col-xs-8 col-sm-8 container body-content">
 
     <div class="row fading-body">
@@ -23,8 +20,5 @@
     </div>
     <hr />
 </div>
-<div class="col-md-2 col-sm-2 col-xs-2 col-lg-2">
-    <button type="button" class="btn btn-default" aria-label="Left Align" id="next" onclick="nextForm();" disabled=@(Model.CanGoNext ? false : true)>
-        <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
-    </button>
-</div>
+
+@Html.Partial("__Next", new ViewDataDictionary { { "canGoNext", @Model.CanGoNext } });
