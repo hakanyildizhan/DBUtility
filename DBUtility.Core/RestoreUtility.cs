@@ -111,8 +111,16 @@ namespace DBUtility.Core
             }
             catch (Exception ex)
             {
+                // cleanup
+                smoServer.Refresh();
+                db = smoServer.Databases[dbtoRestore];
+                
+                if (db != null) db.Drop();
+                if (File.Exists(dbPath)) File.Delete(dbPath);
+                if (File.Exists(logPath)) File.Delete(dbPath);
+
                 response.Status = Response.ResponseMessage.Failed;
-                response.Message = ex.Message;
+                response.Message = ex.GetExceptionMessages();
                 return response;
             }
             
