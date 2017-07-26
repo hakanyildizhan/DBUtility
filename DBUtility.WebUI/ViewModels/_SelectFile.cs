@@ -9,9 +9,9 @@ namespace DBUtility.WebUI.ViewModels
     {
         public string File { get; set; }
 
-        public _SelectFile()
-        {
-            PartialViewType = PartialViewType._SelectFile;
-        }
+        //public _SelectFile()
+        //{
+        //    PartialViewType = PartialViewType._SelectFile;
+        //}
     }
 }

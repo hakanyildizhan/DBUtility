@@ -1,6 +1,7 @@
 ﻿using DBUtility.WebUI.ViewModels;
 using System;
 using System.Collections.Generic;
+using System.Collections;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -10,13 +11,21 @@ namespace DBUtility.WebUI.Controllers
     public class HomeController : Controller
     {
         private DBUtilityContext db = new DBUtilityContext();
+        private static Dictionary<string, int> _viewOrder;
+
+        static HomeController()
+        {
+            _viewOrder = new Dictionary<string, int>();
+            _viewOrder.Add("_SelectFile", 0);
+            _viewOrder.Add("_SelectApplication", 1);
+        }
 
         [HttpGet]
         public ActionResult Index()
         {
             _PartialVM model = new _SelectFile()
             {
-                Title = "_SelectFile",
+                ViewName = "_SelectFile",
                 CanGoBack = false,
                 CanGoNext = true
             };
@@ -27,7 +36,7 @@ namespace DBUtility.WebUI.Controllers
         [HttpPost]
         public PartialViewResult Navigate(_PartialVM model)
         {
-            string currentView = model.Title;
+            string currentView = model.ViewName;
             string direction = model.Direction;
 
             if (model is _SelectFile)
@@ -35,47 +44,29 @@ namespace DBUtility.WebUI.Controllers
                 string file = (model as _SelectFile).File;
             }
             
-
             string partialViewToRender = string.Empty;
             bool canGoBack = true;
             bool canGoNext = true;
 
-            if (direction.Equals("Next", StringComparison.InvariantCultureIgnoreCase))
-            {
-                switch (currentView)
-                {
-                    case "_SelectFile":
-                        partialViewToRender = "_SelectApplication";
-                        break;
-                    default:
-                        break;
-                }
-            }
+            int currentViewOrder = _viewOrder[currentView];
 
-            else
-            {
-                switch (currentView)
-                {
-                    case "_SelectFile":
-                        partialViewToRender = "_SelectFile";
-                        break;
-                    case "_SelectApplication":
-                        partialViewToRender = "_SelectFile";
-                        break;
-                    default:
-                        break;
-                }
-            }
-            
+            partialViewToRender = direction.Equals("Next", StringComparison.InvariantCultureIgnoreCase) ?
+                _viewOrder.FirstOrDefault(x => x.Value.Equals(currentViewOrder + 1)).Key
+                :
+                _viewOrder.FirstOrDefault(x => x.Value.Equals(currentViewOrder - 1)).Key;
 
-            FadingBodyView newModel = new FadingBodyView()
+            if (currentViewOrder.Equals(0)) canGoBack = false;
+            else if (_viewOrder.Count.Equals(_viewOrder[currentView] + 1)) canGoNext = false;
+
+            model = new _PartialVM()
             {
-                Title = partialViewToRender,
+                ViewName = partialViewToRender,
                 CanGoBack = canGoBack,
                 CanGoNext = canGoNext
             };
 
-            return PartialView(partialViewToRender, newModel);
+
+            return PartialView(partialViewToRender, (model as _PartialVM));
         }
     }
 }

@@ -4,7 +4,7 @@
 
 @model DBUtility.WebUI.ViewModels._SelectFile
 
-@Html.Partial("__Back", new ViewDataDictionary { { "canGoBack", @Model.CanGoBack } });
+@Html.Partial("__Back", new ViewDataDictionary { { "canGoBack", @Model.CanGoBack } })
 
 <div class="col-md-8 col-lg-8 col-xs-8 col-sm-8 container body-content">
     <div class="row fading-body">
@@ -14,7 +14,8 @@
                     <h3 class="panel-title">Select File</h3>
                 </div>
                 <div class="panel-body">
-                    @Html.TextBoxFor(m => m.Title, new { hidden = "hidden", value = @title })
+                    @Html.Hidden("ViewName", title)
+                    @*@Html.TextBoxFor(m => m.Title, new { hidden = "hidden", value = @title })*@
                     @*<input id="currentView" name="currentView" hidden="hidden" value="@title" />*@
                     @Html.TextBoxFor(m => m.File)
                     @*<input id="file" name="file" type="text" />*@
@@ -24,5 +25,5 @@
     </div>
 </div>
 
-@Html.Partial("__Next", new ViewDataDictionary { { "canGoNext", @Model.CanGoNext } });
+@Html.Partial("__Next", new ViewDataDictionary { { "canGoNext", @Model.CanGoNext } })
 
