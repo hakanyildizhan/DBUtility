@@ -2,7 +2,6 @@
 using Microsoft.SqlServer.Management.Smo;
 using System;
 using System.Collections.Generic;
-using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
 using System.IO;
@@ -53,7 +52,7 @@ namespace DBUtility.Core
                 db.SetOffline();
             }
 
-            string dataPath = ConfigurationManager.AppSettings["DataPath"];
+            string dataPath = UtilityConfig.GetMachineConfigValue("DataPath");
             string dbPath = Path.Combine(dataPath, dbtoRestore + ".mdf");
             string logPath = Path.Combine(dataPath, dbtoRestore + ".ldf");
 

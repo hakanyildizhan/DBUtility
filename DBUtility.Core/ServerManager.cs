@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
 using Microsoft.SqlServer.Management.Common;
@@ -29,7 +28,7 @@ namespace DBUtility.Core
 
         public static List<string> GetDatabases(string instanceName)
         {
-            var builder = new SqlConnectionStringBuilder(ConfigurationManager.ConnectionStrings[instanceName].ConnectionString);
+            var builder = new SqlConnectionStringBuilder(UtilityConfig.GetConnectionString(instanceName));
             Server srv = new Server (new ServerConnection(builder.DataSource, builder.UserID, builder.Password));
             return srv.Databases.Cast<Database>().Where(d => !d.IsSystemObject).Select(d => d.Name).ToList();
         }

@@ -50,6 +50,7 @@
   <ItemGroup>
     <Compile Include="DBArtifact.cs" />
     <Compile Include="Extension.cs" />
+    <Compile Include="UtilityConfig.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="BackupUtility.cs" />
     <Compile Include="Response.cs" />
