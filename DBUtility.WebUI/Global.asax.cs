@@ -20,10 +20,7 @@ namespace DBUtility.WebUI
             BundleConfig.RegisterBundles(BundleTable.Bundles);
 
             // Partial view model binders
-            //ModelBinders.Binders.Add(typeof(_PartialVM), new PartialViewModelBinder());
-            //ModelBinders.Binders.Add(typeof(_PartialVM), new DerivedTypeModelBinder());
-
-            ModelBinders.Binders.DefaultBinder = new CustomModelBinder();
+            ModelBinders.Binders.Add(typeof(_PartialVM), new CustomModelBinder());
         }
     }
 }

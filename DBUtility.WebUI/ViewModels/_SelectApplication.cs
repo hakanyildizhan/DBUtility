@@ -7,9 +7,6 @@ namespace DBUtility.WebUI.ViewModels
 {
     public class _SelectApplication : _PartialVM
     {
-        //public _SelectApplication()
-        //{
-        //    PartialViewType = PartialViewType._SelectApplication;
-        //}
+        public string Application { get; set; }
     }
 }

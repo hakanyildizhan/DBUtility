@@ -2,16 +2,14 @@
     ViewBag.Title = "Home Page";
 }
 @using DBUtility.WebUI.ViewModels
+@using DBUtility.Core
 @model _PartialVM
 
 
 <form>
     <div class="row main-content" id="partial">
-        @*@if (Model.GetType().Equals(typeof(_SelectFile)))
-        {
-            Html.Partial(Model.Title, (Model as _SelectFile));
-        }*@
-        @Html.Partial(Model.ViewName, Model)
+
+        @Html.Partial(Model.PartialViewType.ToString(), Model)
 
     </div>
 </form>

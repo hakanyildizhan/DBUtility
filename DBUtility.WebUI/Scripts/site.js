@@ -14,14 +14,3 @@ function navigateForm(element) {
         }
     });
 }
-
-//function previousForm() {
-//    $.ajax({
-//        url: "/Home/Back",
-//        type: "post",
-//        data: $("form").serialize(), //if you need to post Model data, use this
-//        success: function (result) {
-//            $("#partial").html(result);
-//        }
-//    });
-//}

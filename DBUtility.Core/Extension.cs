@@ -16,5 +16,16 @@ namespace DBUtility.Core
                 msgs += "\r\n" + GetExceptionMessages(e.InnerException);
             return msgs;
         }
+
+        public static string GetValue(this Enum enumValue)
+        {
+            return nameof(enumValue);
+        }
+
+        public static EnumType ToEnum<EnumType>(this String enumValue)
+        {
+            return (EnumType)Enum.Parse(typeof(EnumType), enumValue);
+        }
+        
     }
 }

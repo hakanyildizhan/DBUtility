@@ -1,8 +1,5 @@
-﻿@{
-    string title = "_SelectFile";
-}
-
-@model DBUtility.WebUI.ViewModels._SelectFile
+﻿@using DBUtility.WebUI.ViewModels
+@model _SelectFile
 
 @Html.Partial("__Back", new ViewDataDictionary { { "canGoBack", @Model.CanGoBack } })
 
@@ -14,11 +11,8 @@
                     <h3 class="panel-title">Select File</h3>
                 </div>
                 <div class="panel-body">
-                    @Html.Hidden("ViewName", title)
-                    @*@Html.TextBoxFor(m => m.Title, new { hidden = "hidden", value = @title })*@
-                    @*<input id="currentView" name="currentView" hidden="hidden" value="@title" />*@
+                    @Html.Hidden("PartialViewType", PartialViewType._SelectFile)
                     @Html.TextBoxFor(m => m.File)
-                    @*<input id="file" name="file" type="text" />*@
                 </div>
             </div>
         </div>

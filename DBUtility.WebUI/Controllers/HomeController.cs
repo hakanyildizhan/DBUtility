@@ -5,6 +5,7 @@ using System.Collections;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using DBUtility.Core;
 
 namespace DBUtility.WebUI.Controllers
 {
@@ -25,7 +26,6 @@ namespace DBUtility.WebUI.Controllers
         {
             _PartialVM model = new _SelectFile()
             {
-                ViewName = "_SelectFile",
                 CanGoBack = false,
                 CanGoNext = true
             };
@@ -34,11 +34,12 @@ namespace DBUtility.WebUI.Controllers
         }
 
         [HttpPost]
-        public PartialViewResult Navigate(_PartialVM model)
+        public PartialViewResult Navigate([ModelBinder(typeof(CustomModelBinder))] _PartialVM model)
         {
-            string currentView = model.ViewName;
+            string currentView = model.PartialViewType.ToString();
             string direction = model.Direction;
 
+            // parse values view by view
             if (model is _SelectFile)
             {
                 string file = (model as _SelectFile).File;
@@ -60,13 +61,12 @@ namespace DBUtility.WebUI.Controllers
 
             model = new _PartialVM()
             {
-                ViewName = partialViewToRender,
+                PartialViewType = partialViewToRender.ToEnum<PartialViewType>(),
                 CanGoBack = canGoBack,
                 CanGoNext = canGoNext
             };
-
-
-            return PartialView(partialViewToRender, (model as _PartialVM));
+            
+            return PartialView(partialViewToRender, model);
         }
     }
 }
