@@ -7,7 +7,6 @@ using System.IO;
 using Microsoft.SqlServer.Management.Common;
 using Microsoft.SqlServer.Management.Smo;
 using System.Data.SqlClient;
-using System.Configuration;
 
 namespace DBUtility.Core
 {
@@ -34,7 +33,7 @@ namespace DBUtility.Core
                 if (string.IsNullOrEmpty(this.ServerName)) return null;
                 else
                 {
-                    var builder = new SqlConnectionStringBuilder(ConfigurationManager.ConnectionStrings[this.ServerName].ConnectionString);
+                    var builder = new SqlConnectionStringBuilder(UtilityConfig.GetConnectionString(this.ServerName));
                     return new Server(new ServerConnection(builder.DataSource, builder.UserID, builder.Password));
                 }
             }
@@ -44,7 +43,7 @@ namespace DBUtility.Core
         {
             get
             {
-                return new FileInfo(Path.Combine(ConfigurationManager.AppSettings["BackupPath"], this.FileName));
+                return new FileInfo(Path.Combine(UtilityConfig.GetMachineConfigValue("BackupPath"), this.FileName));
                 //else return new FileInfo(this.FileName);
             }
         }
